@@ -14,6 +14,7 @@ var dataArray = [{}];
 var fields=['AtoB','BtoA'];
 
 function pcap2csv(path, tcp_udp){
+	console.log("please wait, this may take a few minutes...")
 
 	// Walker options
 	var walker = walk.walk(path, {
