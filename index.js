@@ -33,6 +33,7 @@ function pcap2csv(path, tcp_udp){
 	});
 
 	function processor(cb){
+		console.log("please wait, this may take a few minutes...")
 		if(files[i]){
 			if(files[i].split('.')[1]=='pcap'){
 				var separates = files[i].split('/');
