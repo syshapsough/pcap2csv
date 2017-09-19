@@ -6,13 +6,15 @@ var json2csv = require('json2csv');
 
 
 /**********************************************************************************************************/
+var files = [];
+var counter = 0;
+var i=0;
+var mytimer;
+
 function pcap2csv(path){
-	var files = [];
-	var counter = 0;
-	var i=0;
 
 	// Walker options
-	var walker = walk.walk('./'+path, {
+	var walker = walk.walk(path, {
 	    followLinks: false
 	});
 
@@ -23,17 +25,35 @@ function pcap2csv(path){
 	});
 
 	walker.on('end', function () {
-	    setInterval(processor,3000);
+	    mytimer = setInterval(processor,1000);
+	    //processor()
+	   //setTimeout(function(){console.log("done")}, 3000);
 	});
 
 	function processor(){
-		if(files[counter].split('.')[2]=='pcap'){
-			var cmd = 'tshark -nr '+files[counter]+ ' -z conv,tcp -q >> ' +path+'/' + counter++ +'.txt'; //tshark has to be already installed on the machine
-			var exec = require('child_process').exec;
-			exec(cmd, function(error, stdout, stderr) {
-				console.log('executed');
-			});
+		if(files[i]){
+			if(files[i].split('.')[1]=='pcap'){
+				var separates = files[i].split('/');
+				var spawn = require('child_process').spawn,
+					ts = spawn('tshark', ['-nr', files[i], '-z', 'conv,tcp', '-q']);
+
+				ts.stdout.on('data', function (data) {
+				    fs.writeFile(path+'/'+separates[separates.length-1].split('.')[0] +'.txt', data, function (err) {
+				    	console.log(path+'/'+separates[separates.length-1].split('.')[0] +'.txt');
+				        if (err) throw err;
+				    });
+				});
+				/*ts.stderr.on('data', function (data) {
+				    console.log('stderr: ' + data);
+				});
+
+				ts.on('exit', function (code) {
+				   console.log('child process exited with code ' + code);
+				});*/
+				i++;
+			}
 		}
+		else clearInterval(mytimer)
 	}
 }
 

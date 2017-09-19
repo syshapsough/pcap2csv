@@ -11,5 +11,10 @@
     "url": "https://github.com/syshapsough/pcap2csv"
   },
   "author": "syshapsough <salsabeelshapsough@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "json2csv": "^3.11.2",
+    "walk": "^2.3.9"
+  }
 }
