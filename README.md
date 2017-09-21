@@ -14,3 +14,6 @@ npm install pcap2csv
 
 ##sample
 A test code is provided in test.js
+
+##to-do
+Future updates will make the module more dynamic to offer more parsing options.
