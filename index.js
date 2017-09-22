@@ -11,10 +11,9 @@ var counter = 0;
 var i=0;
 var mytimer;
 var dataArray = [{}];
-var fields=['AtoB','BtoA'];
-
+var fields=['A', 'B', 'AtoB (bit/s)','BtoA (bit/s)'];
+console.log("please wait, this may take a few minutes...")
 function pcap2csv(path, tcp_udp){
-	console.log("please wait, this may take a few minutes...")
 
 	// Walker options
 	var walker = walk.walk(path, {
@@ -27,14 +26,13 @@ function pcap2csv(path, tcp_udp){
 	    next();
 	});
 
-	walker.on('end', function () {
+	walker.on('end', function () {	
 	    mytimer = setInterval(processor,1000);
 	    //processor()
 	   //setTimeout(function(){console.log("done")}, 3000);
 	});
 
-	function processor(cb){
-		console.log("please wait, this may take a few minutes...")
+	function processor(cb){	
 		if(files[i]){
 			if(files[i].split('.')[1]=='pcap'){
 				var separates = files[i].split('/');
@@ -55,7 +53,7 @@ function pcap2csv(path, tcp_udp){
 		    		while (linearray.length>11){
 			    		var AtoB = parseFloat(linearray[6]) * 8 / parseFloat(linearray[10]);
 			    		var BtoA = parseFloat(linearray[4]) * 8 / parseFloat(linearray[10]);
-			    		dataArray.push({AtoB:AtoB, BtoA:BtoA});
+			    		dataArray.push({A:linearray[0], B:linearray[2], 'AtoB (bit/s)':AtoB, 'BtoA (bit/s)':BtoA});
 			    		linearray.splice(0, 11)
 		    		}
 				});
