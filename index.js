@@ -52,10 +52,11 @@ function pcap2csv(path, tcp_udp){
 				    var array = data.toString().split("|");
 				    var line = array[array.length-1];
 		    		var linearray = line.match(/\S+/g) || [];
-		    		if (linearray.length<13){
+		    		while (linearray.length>11){
 			    		var AtoB = parseFloat(linearray[6]) * 8 / parseFloat(linearray[10]);
 			    		var BtoA = parseFloat(linearray[4]) * 8 / parseFloat(linearray[10]);
 			    		dataArray.push({AtoB:AtoB, BtoA:BtoA});
+			    		linearray.splice(0, 11)
 		    		}
 				});
 
