@@ -12,8 +12,12 @@ e.g.  tshark -w myfile.pcap -f "tcp port 1883" -i Ethernet
 npm install pcap2csv
 ```
 
-## sample
-A test code is provided in test.js
+## usage
+```
+var pcap2csv = require('pcap2csv');
+
+pcap2csv(<path_to_pcap_files>,<protocol>); //protocol can be "tcp" or "udp", depending on your tshark filter
+```
 
 ## to-do
 Future updates will make the module more dynamic to offer more parsing options.
